@@ -1,4 +1,4 @@
-package com.gmail.uramen66.ordermovies.repositories;
+package com.gmail.uramen66.ordermovies.service.repositories;
 
 import com.gmail.uramen66.ordermovies.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

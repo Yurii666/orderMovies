@@ -1,7 +1,7 @@
 package com.gmail.uramen66.ordermovies.service;
 
 import com.gmail.uramen66.ordermovies.model.User;
-import com.gmail.uramen66.ordermovies.repositories.UserRepository;
+import com.gmail.uramen66.ordermovies.service.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
