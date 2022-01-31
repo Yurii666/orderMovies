@@ -1,4 +1,4 @@
-package com.gmail.uramen66.ordermovies.model;
+package com.gmail.uramen66.ordermovies.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
