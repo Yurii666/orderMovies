@@ -24,5 +24,5 @@ public class Hall {
     @JoinTable(name = "hall_timeslots)",
             joinColumns = {@JoinColumn(name = "hall_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "timeslot_id", referencedColumnName = "id")})
-    private Set<Timeslot> timeslots;
+    private Set<TimesLot> timeslots;
 }

@@ -6,6 +6,8 @@ import com.gmail.uramen66.ordermovies.enums.StatusRequested;
 import com.gmail.uramen66.ordermovies.model.RequestedSeats;
 import com.gmail.uramen66.ordermovies.repositories.RequestedSeatsRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import static com.gmail.uramen66.ordermovies.enums.StatusRequested.*;
@@ -59,5 +61,8 @@ public class RequestedSeatsService {
                 .findBiIdAndStatusRequested(id, BOOKED)
                 .orElseThrow(Exception::new);
         requestedSeats.setStatusRequested(FREE);
+    }
+    public Page<RequestedSeatsDTO> findAllRequestedSeats(Pageable pageable){
+        return requestedSeatsMapper.requestedSeatsToRequestedSeatsDTOs(requestedSeatsRepository.findAll(pageable));
     }
 }

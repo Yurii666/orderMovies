@@ -17,7 +17,7 @@ public class MovieDTO {
     private String description;
     private Integer duration;
     private Integer min_ege;
-    private float rating;
+    private Float rating;
     private Ganres ganres;
     private TypeMovie typeMovie;
 }

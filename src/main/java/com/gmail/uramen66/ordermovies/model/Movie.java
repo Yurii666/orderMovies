@@ -33,7 +33,7 @@ public class Movie {
     private Integer min_ege;
 
     @NonNull
-    private float rating;
+    private Float rating;
 
     @Enumerated(EnumType.STRING)
     private Ganres ganres;

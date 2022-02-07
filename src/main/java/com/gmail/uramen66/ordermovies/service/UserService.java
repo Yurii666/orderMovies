@@ -6,6 +6,8 @@ import com.gmail.uramen66.ordermovies.enums.StatusType;
 import com.gmail.uramen66.ordermovies.model.User;
 import com.gmail.uramen66.ordermovies.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -23,7 +25,7 @@ public class UserService {
     public UserDTO createUser(UserDTO userDTO){
         User user = User.builder()
                 .username(userDTO.getUsername())
-                .pussword(userDTO.getPussword())
+                .password(userDTO.getPassword())
                 .name(userDTO.getName())
                 .surname(userDTO.getSurname())
                 .email(userDTO.getEmail())
@@ -51,5 +53,7 @@ public class UserService {
         user.setStatus(DELETED);
         userRepository.saveAndFlush(user);
     }
-
+    public Page<UserDTO> findByUsers(Pageable pageable){
+        return userMapper.userToUserDTOs(userRepository.findAll(pageable));
+    }
 }

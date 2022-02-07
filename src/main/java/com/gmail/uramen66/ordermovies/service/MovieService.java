@@ -5,6 +5,8 @@ import com.gmail.uramen66.ordermovies.dto.movie.MovieMapper;
 import com.gmail.uramen66.ordermovies.model.Movie;
 import com.gmail.uramen66.ordermovies.repositories.MovieRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +16,7 @@ public class MovieService {
     private MovieRepository movieRepository;
     private MovieMapper movieMapper;
 
-   public MovieDTO createMovie(MovieDTO movieDTO){
+    public MovieDTO createMovie(MovieDTO movieDTO){
         Movie movie = Movie.builder()
                 .movie_name(movieDTO.getMovie_name())
                 .description(movieDTO.getDescription())
@@ -40,5 +42,8 @@ public class MovieService {
         movieRepository.delete(movieRepository.findById(id)
                 .orElseThrow(Exception::new)
         );
-   }
+    }
+    public Page<MovieDTO> findAllMovies(Pageable pageable) {
+        return movieMapper.movieToMovieDTOs(movieRepository.findAll(pageable));
+    }
 }

@@ -1,6 +1,5 @@
 package com.gmail.uramen66.ordermovies.dto.requestedseats;
 
-import com.gmail.uramen66.ordermovies.enums.StatusRequested;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +13,4 @@ public class RequestedSeatsDTO {
     private Long id;
     public Integer row;
     public Integer seat;
-    private StatusRequested statusRequested;
 }
