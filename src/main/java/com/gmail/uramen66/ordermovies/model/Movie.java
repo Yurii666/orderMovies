@@ -1,9 +1,7 @@
 package com.gmail.uramen66.ordermovies.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import com.gmail.uramen66.ordermovies.enums.Ganres;
+import com.gmail.uramen66.ordermovies.enums.TypeMovie;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -22,10 +20,11 @@ public class Movie {
     private Long id;
 
     @NonNull
-    private String name;
+    private String movie_name;
 
     @NonNull
     private String description;
+
     //It's movie length in minutes
     @NonNull
     private Integer duration;
@@ -34,19 +33,11 @@ public class Movie {
     private Integer min_ege;
 
     @NonNull
-    private float rating;
+    private Float rating;
 
     @Enumerated(EnumType.STRING)
-    private Ganres status ;
+    private Ganres ganres;
 
     @Enumerated(EnumType.STRING)
-    private TypeMovie typeMovie ;
-
-
-    //@OneToMany
-    //    @JoinTable(name = "movies_ganres)",
-    //           joinColumns = {@JoinColumn(name = "car_id", referencedColumnName = "id")},
-    //           inverseJoinColumns = {@JoinColumn(name = "part_details_id", referencedColumnName = "id")}
-    //   )
-
+    private TypeMovie typeMovie;
 }

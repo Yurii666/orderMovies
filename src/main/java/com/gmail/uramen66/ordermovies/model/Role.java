@@ -1,6 +1,7 @@
 package com.gmail.uramen66.ordermovies.model;
 
 
+import com.gmail.uramen66.ordermovies.enums.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
