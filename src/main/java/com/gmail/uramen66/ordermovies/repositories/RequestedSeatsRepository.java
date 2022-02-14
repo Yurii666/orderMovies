@@ -13,4 +13,7 @@ public interface RequestedSeatsRepository extends JpaRepository<RequestedSeats, 
 
     @Query(value = "select rs from RequestedSeats rs where rs.id =:id and rs.statusRequested =:statusRequested")
     Optional<RequestedSeats> findBiIdAndStatusRequested(Long id, StatusRequested statusRequested);
+
+    @Query(value = "select rs from RequestedSeats rs where rs.id =:id ")
+    Optional<RequestedSeats> findBiId(Long id);
 }

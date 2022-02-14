@@ -36,4 +36,10 @@ public class TimesLot {
             joinColumns = {@JoinColumn(name = "timeslot_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "tariffs_id", referencedColumnName = "id")})
     private Set<Tariffs> tariffs;
+
+    @ManyToMany
+    @JoinTable(name = "timeslots_requestedseats)",
+            joinColumns = {@JoinColumn(name = "timeslot_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "requestseats_id", referencedColumnName = "id")})
+    private Set<RequestedSeats> requestedSeats;
 }

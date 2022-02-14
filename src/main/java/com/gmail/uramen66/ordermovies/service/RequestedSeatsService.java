@@ -3,6 +3,7 @@ package com.gmail.uramen66.ordermovies.service;
 import com.gmail.uramen66.ordermovies.dto.requestedseats.RequestedSeatsDTO;
 import com.gmail.uramen66.ordermovies.dto.requestedseats.RequestedSeatsMapper;
 import com.gmail.uramen66.ordermovies.enums.StatusRequested;
+import com.gmail.uramen66.ordermovies.exception.ResourceNotFoundException;
 import com.gmail.uramen66.ordermovies.model.RequestedSeats;
 import com.gmail.uramen66.ordermovies.repositories.RequestedSeatsRepository;
 import lombok.AllArgsConstructor;
@@ -10,16 +11,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static com.gmail.uramen66.ordermovies.enums.StatusRequested.*;
-
 @Service
 @AllArgsConstructor
 public class RequestedSeatsService {
 
-    private RequestedSeatsRepository requestedSeatsRepository;
-    private RequestedSeatsMapper requestedSeatsMapper;
+    private final RequestedSeatsRepository requestedSeatsRepository;
+    private final RequestedSeatsMapper requestedSeatsMapper;
 
     public RequestedSeatsDTO createRequestedSeats(RequestedSeatsDTO requestedSeatsDTO){
+        //I want to add automatic created oll RequestedSeats corresponding to the number of rowMax and seatMax
+        // in the selected Hall.Maybe letter. And don't add create in Controller.
         RequestedSeats requestedSeats = RequestedSeats.builder()
                 .row(requestedSeatsDTO.getRow())
                 .seat(requestedSeatsDTO.getSeat())
@@ -29,40 +30,38 @@ public class RequestedSeatsService {
         RequestedSeats saveRequestedSeats = requestedSeatsRepository.saveAndFlush(requestedSeats);
         return requestedSeatsMapper.requestedSeatsToRequestedSeatsDTO(saveRequestedSeats);
     }
-    public RequestedSeatsDTO findBiIdAndStatusRequested(Long id) throws  Exception{
+    public RequestedSeatsDTO findBiIdAndStatusRequested(Long id, StatusRequested statusRequested){
         return requestedSeatsRepository
-                .findBiIdAndStatusRequested(id, StatusRequested.FREE)
+                .findBiIdAndStatusRequested(id, statusRequested)
                 .map(requestedSeatsMapper::requestedSeatsToRequestedSeatsDTO)
-                .orElseThrow(Exception::new);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public void buySeats(Long id) throws Exception {
-        RequestedSeats requestedSeats = requestedSeatsRepository
-                .findBiIdAndStatusRequested(id, StatusRequested.FREE)
-                .orElseThrow(Exception::new);
-        requestedSeats.setStatusRequested(BUSY);
-    }
-    public void reservedSeats(Long id) throws Exception{
-        RequestedSeats requestedSeats =requestedSeatsRepository
-                .findBiIdAndStatusRequested(id, StatusRequested.FREE)
-                .orElseThrow(Exception::new);
-        requestedSeats.setStatusRequested(BOOKED);
+    public RequestedSeatsDTO findById(Long id){
+        return requestedSeatsRepository.findById(id)
+                .map(requestedSeatsMapper::requestedSeatsToRequestedSeatsDTO)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public void bookingConfirmation (Long id) throws Exception{
-        RequestedSeats requestedSeats =requestedSeatsRepository
-                .findBiIdAndStatusRequested(id, BOOKED)
-                .orElseThrow(Exception::new);
-        requestedSeats.setStatusRequested(BUSY);
+    public Page<RequestedSeatsDTO> findAllRequestedSeats(Pageable page){
+        return requestedSeatsMapper.requestedSeatsToRequestedSeatsDTOs(requestedSeatsRepository.findAll(page));
     }
 
-    public void returnBoo(Long id) throws Exception{
-        RequestedSeats requestedSeats =requestedSeatsRepository
-                .findBiIdAndStatusRequested(id, BOOKED)
-                .orElseThrow(Exception::new);
-        requestedSeats.setStatusRequested(FREE);
+    public RequestedSeatsDTO updateReqestedSeats(Long id, RequestedSeatsDTO requestedSeatsDTO) {
+        RequestedSeats requestedSeatsUpdateById = requestedSeatsRepository.findBiId(id)
+                .orElseThrow(ResourceNotFoundException ::new);
+
+        RequestedSeats actualRequestedSeats = requestedSeatsMapper.requestedSeatsDTOToRequestedSeats(requestedSeatsDTO);
+        requestedSeatsUpdateById.setStatusRequested(actualRequestedSeats.getStatusRequested());
+
+        return requestedSeatsMapper.requestedSeatsToRequestedSeatsDTO(requestedSeatsRepository.save(requestedSeatsUpdateById));
     }
-    public Page<RequestedSeatsDTO> findAllRequestedSeats(Pageable pageable){
-        return requestedSeatsMapper.requestedSeatsToRequestedSeatsDTOs(requestedSeatsRepository.findAll(pageable));
-    }
+
+//  I think all RequestedSeats in TimesLot mast automatic delete after some times, maybe a year after startTime.
+//  But I add delete now.
+    public void deleteRequestedSeats(Long id){
+        requestedSeatsRepository.delete(requestedSeatsRepository.findBiId(id)
+                .orElseThrow(ResourceNotFoundException::new));
+        }
+
 }
