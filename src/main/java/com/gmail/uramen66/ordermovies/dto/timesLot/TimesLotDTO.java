@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.Timestamp;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -13,5 +13,5 @@ import java.security.Timestamp;
 @Builder
 public class TimesLotDTO {
     private Long id;
-    public Timestamp startTime;
+    public Date startTime;
 }

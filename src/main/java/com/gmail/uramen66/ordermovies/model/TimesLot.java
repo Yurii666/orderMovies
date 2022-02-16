@@ -1,12 +1,9 @@
 package com.gmail.uramen66.ordermovies.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.security.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -21,8 +18,8 @@ public class TimesLot {
     private Long id;
 
     //It should beat the start time of the movie
-    @Deprecated
-    public Timestamp startTime;
+@NonNull
+    public Date startTime;
 
 
     @ManyToMany
@@ -41,5 +38,5 @@ public class TimesLot {
     @JoinTable(name = "timeslots_requestedseats)",
             joinColumns = {@JoinColumn(name = "timeslot_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "requestseats_id", referencedColumnName = "id")})
-    private Set<RequestedSeats> requestedSeats;
+    private Set<HallPlaces> requestedSeats;
 }

@@ -2,7 +2,7 @@ package com.gmail.uramen66.ordermovies.service;
 
 import com.gmail.uramen66.ordermovies.dto.movie.MovieDTO;
 import com.gmail.uramen66.ordermovies.dto.movie.MovieMapper;
-import com.gmail.uramen66.ordermovies.exception.ResourceNotFoundException;
+import com.gmail.uramen66.ordermovies.exception.MovieByIdException;
 import com.gmail.uramen66.ordermovies.model.Movie;
 import com.gmail.uramen66.ordermovies.repositories.MovieRepository;
 import lombok.AllArgsConstructor;
@@ -36,12 +36,12 @@ public class MovieService {
         return movieRepository
                 .findById(id)
                 .map(movieMapper::movieToMovieDto)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(MovieByIdException::new);
     }
 
     public void deleteMovie(Long id)  {
         movieRepository.delete(movieRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new)
+                .orElseThrow(MovieByIdException::new)
         );
     }
     public Page<MovieDTO> findAllMovies(Pageable pageable) {
@@ -49,7 +49,7 @@ public class MovieService {
     }
     public MovieDTO updateMovie(Long id, MovieDTO movieDTO){
         Movie movieUpdateById = movieRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(MovieByIdException::new);
 
         Movie actualMovie = movieMapper.movieDtoToMovie(movieDTO);
         movieUpdateById.setMovie_name(actualMovie.getMovie_name());

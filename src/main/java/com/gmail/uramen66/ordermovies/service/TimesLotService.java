@@ -2,7 +2,7 @@ package com.gmail.uramen66.ordermovies.service;
 
 import com.gmail.uramen66.ordermovies.dto.timesLot.TimesLotDTO;
 import com.gmail.uramen66.ordermovies.dto.timesLot.TimesLotMapper;
-import com.gmail.uramen66.ordermovies.exception.ResourceNotFoundException;
+import com.gmail.uramen66.ordermovies.exception.TimesLotById;
 import com.gmail.uramen66.ordermovies.model.TimesLot;
 import com.gmail.uramen66.ordermovies.repositories.TimesLotRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class TimesLotService {
 
     public TimesLotDTO createTimesLot (TimesLotDTO timesLotDTO){
         TimesLot timesLot = TimesLot.builder()
-//                .startTime(timesLotDTO.getStartTime())
+                .startTime(timesLotDTO.getStartTime())
                 .build();
 
         TimesLot saveTimesLot = timesLotRepository.saveAndFlush(timesLot);
@@ -29,17 +29,17 @@ public class TimesLotService {
         return timesLotRepository
                 .findById(id)
                 .map(timesLotMapper::timesLotToTimesLotDto)
-                .orElseThrow(ResourceNotFoundException ::new);
+                .orElseThrow(TimesLotById::new);
     }
     public void deleteTimesLot(Long id) {
         timesLotRepository.delete(
                 timesLotRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException ::new)
+                .orElseThrow(TimesLotById ::new)
         );
     }
     public TimesLotDTO updateTimesLot(Long id, TimesLotDTO timesLotDTO){
         TimesLot timesLotUpdateById = timesLotRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(TimesLotById::new);
 
         TimesLot actualTimesLot = timesLotMapper.timesLotDtoToTimesLot(timesLotDTO);
         timesLotUpdateById.setStartTime(actualTimesLot.getStartTime());

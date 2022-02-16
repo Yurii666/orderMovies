@@ -1,27 +1,27 @@
 package com.gmail.uramen66.ordermovies.controller;
 
-import com.gmail.uramen66.ordermovies.dto.requestedseats.RequestedSeatsDTO;
-import com.gmail.uramen66.ordermovies.service.RequestedSeatsService;
+import com.gmail.uramen66.ordermovies.dto.hallPlaces.HallPlacesDTO;
+import com.gmail.uramen66.ordermovies.service.HallPlacesService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/requestedseats")
+@RequestMapping("/hallplaces")
 @AllArgsConstructor
-public class RequestedSeatsController {
-    public final RequestedSeatsService requestedSeatsService;
+public class HallPlacesController {
+    public final HallPlacesService hallPlacesService;
     //Пока-что произошел затык с вопросом вывода посадочных мест по конкретному TimesLot
     //Потому как выводить все меcта  по всем залам -это бред, нам нужен конкретный TimesLot
 
-
     @GetMapping("/{id}")
-    public RequestedSeatsDTO findById(@PathVariable long id){
-        return requestedSeatsService.findById(id);
+    public HallPlacesDTO findById(@PathVariable long id){
+
+        return hallPlacesService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public RequestedSeatsDTO updateRequestedSeats(@PathVariable long id, RequestedSeatsDTO requestedSeatsDTO){
-        return requestedSeatsService.updateReqestedSeats(id,requestedSeatsDTO);
+    public HallPlacesDTO updateHallPlaces(@PathVariable long id, HallPlacesDTO hallPlacesDTO){
+        return hallPlacesService.updateHallPlaces(id,hallPlacesDTO);
     }
     //I don't add delete, I don't add creat - see RequestedSeatsService
 }

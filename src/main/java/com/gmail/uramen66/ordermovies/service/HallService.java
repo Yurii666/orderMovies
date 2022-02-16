@@ -2,7 +2,7 @@ package com.gmail.uramen66.ordermovies.service;
 
 import com.gmail.uramen66.ordermovies.dto.hall.HallDTO;
 import com.gmail.uramen66.ordermovies.dto.hall.HallMapper;
-import com.gmail.uramen66.ordermovies.exception.ResourceNotFoundException;
+import com.gmail.uramen66.ordermovies.exception.HallByIdException;
 import com.gmail.uramen66.ordermovies.model.Hall;
 import com.gmail.uramen66.ordermovies.repositories.HallRepository;
 import lombok.AllArgsConstructor;
@@ -31,12 +31,12 @@ public class HallService {
         return hallRepository
                 .findById(id)
                 .map(hallMapper::hallToHallDto)
-                .orElseThrow(ResourceNotFoundException ::new);
+                .orElseThrow(HallByIdException::new);
     }
     public void deleteHall(long id){
         hallRepository.delete(
                 hallRepository.findById(id)
-                        .orElseThrow(ResourceNotFoundException ::new)
+                        .orElseThrow(HallByIdException ::new)
         );
     }
 
@@ -45,7 +45,7 @@ public class HallService {
     }
     public HallDTO updateHall(Long id, HallDTO hallDTO){
         Hall hallUpdateById = hallRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(HallByIdException::new);
 
         Hall actualHall = hallMapper.hallDtoToHall(hallDTO);
         hallUpdateById.setName(actualHall.getName());

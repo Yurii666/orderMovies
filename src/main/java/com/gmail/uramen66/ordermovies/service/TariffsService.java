@@ -2,7 +2,7 @@ package com.gmail.uramen66.ordermovies.service;
 
 import com.gmail.uramen66.ordermovies.dto.tariffs.TariffsDTO;
 import com.gmail.uramen66.ordermovies.dto.tariffs.TariffsMapper;
-import com.gmail.uramen66.ordermovies.exception.ResourceNotFoundException;
+import com.gmail.uramen66.ordermovies.exception.TariffsByIdException;
 import com.gmail.uramen66.ordermovies.model.Tariffs;
 import com.gmail.uramen66.ordermovies.repositories.TariffsRepository;
 import lombok.AllArgsConstructor;
@@ -31,13 +31,13 @@ public class TariffsService {
     public void deleteTariffs(Long id){
         tariffsRepository.delete(
                 tariffsRepository.findById(id)
-                        .orElseThrow(ResourceNotFoundException ::new)
+                        .orElseThrow(TariffsByIdException::new)
         );
     }
 
     public TariffsDTO updateTariffs(Long id, TariffsDTO tariffsDTO){
         Tariffs tariffsUpdateById = tariffsRepository.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(TariffsByIdException::new);
 
         Tariffs actualTariffs = tariffsMapper.tariffsDtoToTariffs(tariffsDTO);
         tariffsUpdateById.setName(actualTariffs.getName());
@@ -52,6 +52,6 @@ public class TariffsService {
     public TariffsDTO findById(Long id){
         return tariffsRepository.findById(id)
                 .map(tariffsMapper::tariffsToTariffsDto)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(TariffsByIdException::new);
     }
 }
