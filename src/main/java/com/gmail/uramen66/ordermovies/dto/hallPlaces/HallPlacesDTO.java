@@ -1,5 +1,6 @@
-package com.gmail.uramen66.ordermovies.dto.requestedseats;
+package com.gmail.uramen66.ordermovies.dto.hallPlaces;
 
+import com.gmail.uramen66.ordermovies.model.HallPlaces;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestedSeatsDTO {
+public class HallPlacesDTO extends HallPlaces {
     private Long id;
     public Integer row;
     public Integer seat;

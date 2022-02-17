@@ -1,5 +1,6 @@
 package com.gmail.uramen66.ordermovies.model;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,12 @@ public class Hall {
 
     @NonNull
     private String name;
+
+    @NotNull
+    private int rowMax;
+
+    @NotNull
+    public Integer seatMax;
 
     @ManyToMany
     @JoinTable(name = "hall_timeslots)",

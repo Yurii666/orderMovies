@@ -8,15 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "requestedseats")
-public class RequestedSeats {
+@Table(name = "hallplaces")
+public class HallPlaces {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +30,5 @@ public class RequestedSeats {
     @Enumerated(EnumType.STRING)
     private StatusRequested statusRequested;
 
-    @ManyToMany
-    @JoinTable(name = "requestedseats_timeslots)",
-            joinColumns = {@JoinColumn(name = "requestseats_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "timeslot_id", referencedColumnName = "id")})
-    private Set<TimesLot> timeslots;
 
 }
